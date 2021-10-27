@@ -21,7 +21,7 @@ class PeerConnectionSample : MonoBehaviour
     [SerializeField] private Camera cam;
     [SerializeField] private RawImage sourceImage;
     [SerializeField] private RawImage receiveImage;
-    [SerializeField] private Transform rotateObject;
+    //[SerializeField] private Transform rotateObject;
 
     private WebCamDevice webCam;
 
@@ -54,7 +54,7 @@ class PeerConnectionSample : MonoBehaviour
 
     private void OnDestroy()
     {
-        WebRTC.Dispose();
+        WebRTC.Dispose();  
     }
 
     private void Start()
@@ -82,28 +82,23 @@ class PeerConnectionSample : MonoBehaviour
                 receiveImage.color = Color.white;
             }
         };
-
-
-
     }
 
+    // Yuanjie
     private void ReadExternalCamera()
     {
+        // Get connected cameras info
         WebCamDevice[] devices = WebCamTexture.devices;
 
-        // for debugging purposes, prints available devices to the console
+        // For debugging purposes, prints available devices to the console
         for (int i = 0; i < devices.Length; i++)
         {
             print("Webcam available: " + devices[i].name);
         }
 
-        webCam = devices[0];
+        webCam = devices[0]; // Make the first camera as default one
 
-        //Renderer rend = sourceImage.GetComponentInChildren<Renderer>();
-
-        // assuming the first available WebCam is desired
-        //WebCamTexture tex = new WebCamTexture(devices[0].name);
-        //rend.material.mainTexture = tex;
+        // Set web camera input as sourceImage Texture
         WebCamTexture tex = new WebCamTexture(webCam.name);
         sourceImage.texture = tex;
         sourceImage.color = Color.white;
@@ -130,11 +125,11 @@ class PeerConnectionSample : MonoBehaviour
 
     private void Update()
     {
-        if (rotateObject != null)
-        {
-            float t = Time.deltaTime;
-            rotateObject.Rotate(100 * t, 200 * t, 300 * t);
-        }
+        //if (rotateObject != null)
+        //{
+        //    float t = Time.deltaTime;
+        //    rotateObject.Rotate(100 * t, 200 * t, 300 * t);
+        //}
     }
 
     private static RTCConfiguration GetSelectedSdpSemantics()
