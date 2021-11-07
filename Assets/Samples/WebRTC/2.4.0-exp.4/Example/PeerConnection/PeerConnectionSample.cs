@@ -21,10 +21,10 @@ class PeerConnectionSample : MonoBehaviour
     [SerializeField] private Camera cam;
     [SerializeField] private RawImage sourceImage;
     [SerializeField] private RawImage receiveImage;
-    //[SerializeField] private Transform rotateObject;
 
+    // Yuanjie
     private WebCamDevice webCam;
-
+    private WebCamTexture tex;
 
 #pragma warning restore 0649
 
@@ -54,7 +54,9 @@ class PeerConnectionSample : MonoBehaviour
 
     private void OnDestroy()
     {
-        WebRTC.Dispose();  
+        WebRTC.Dispose();
+        tex.Stop();
+        
     }
 
     private void Start()
@@ -99,7 +101,7 @@ class PeerConnectionSample : MonoBehaviour
         webCam = devices[0]; // Make the first camera as default one
 
         // Set web camera input as sourceImage Texture
-        WebCamTexture tex = new WebCamTexture(webCam.name);
+        tex = new WebCamTexture(webCam.name);
         sourceImage.texture = tex;
         sourceImage.color = Color.white;
         tex.Play();
@@ -125,11 +127,7 @@ class PeerConnectionSample : MonoBehaviour
 
     private void Update()
     {
-        //if (rotateObject != null)
-        //{
-        //    float t = Time.deltaTime;
-        //    rotateObject.Rotate(100 * t, 200 * t, 300 * t);
-        //}
+
     }
 
     private static RTCConfiguration GetSelectedSdpSemantics()
@@ -252,13 +250,14 @@ class PeerConnectionSample : MonoBehaviour
         }
     }
 
+    // set ice server and create connection offer and answer
     private void Call()
     {
         callButton.interactable = false;
         hangUpButton.interactable = true;
         restartButton.interactable = true;
 
-        var configuration = GetSelectedSdpSemantics();
+        var configuration = GetSelectedSdpSemantics(); // set configuration and ice server
         _pc1 = new RTCPeerConnection(ref configuration);
         _pc1.OnIceCandidate = pc1OnIceCandidate;
         _pc1.OnIceConnectionChange = pc1OnIceConnectionChange;

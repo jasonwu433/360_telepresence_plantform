@@ -6755,7 +6755,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Virtual Cam
+  m_Text: Call
 --- !u!222 &1331282190
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12666,7 +12666,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Web Cam
+  m_Text: Start
 --- !u!222 &2128865830
 CanvasRenderer:
   m_ObjectHideFlags: 0
