@@ -55,7 +55,7 @@ class PeerConnectionSample : MonoBehaviour
     private void OnDestroy()
     {
         WebRTC.Dispose();
-        tex.Stop();
+        //tex.Stop();
         
     }
 
