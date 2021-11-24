@@ -25,31 +25,33 @@ public class XRSocketEvent : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "Calculation Games")
         {
-            XRBaseInteractable obj = args.interactable; //The interactable object that enter the socket
-                                                        //Catergory the number and operator 
-            if (obj.gameObject.GetComponent<Snap_objects>().snapObjectProperty == Snap_objects.snapObjectProperties.number)
+            //XRBaseInteractable obj = args.in; //The interactable object that enter the socket
+            IXRSelectInteractable obj = args.interactableObject;  
+            
+            //Catergory the number and operator 
+            if (obj.transform.GetComponent<Snap_objects>().snapObjectProperty == Snap_objects.snapObjectProperties.number)
             {
                 switch (socketProperty)
                 {
                     case socketProperties.NA1:
-                        GameManager.Instance.number1 = int.Parse(obj.gameObject.GetComponentInChildren<TMP_Text>().text);
+                        GameManager.Instance.number1 = int.Parse(obj.transform.GetComponentInChildren<TMP_Text>().text);
                         break;
                     case socketProperties.NA2:
-                        GameManager.Instance.number2 = int.Parse(obj.gameObject.GetComponentInChildren<TMP_Text>().text);
+                        GameManager.Instance.number2 = int.Parse(obj.transform.GetComponentInChildren<TMP_Text>().text);
                         break;
                     case socketProperties.NA3:
-                        GameManager.Instance.number3 = int.Parse(obj.gameObject.GetComponentInChildren<TMP_Text>().text);
+                        GameManager.Instance.number3 = int.Parse(obj.transform.GetComponentInChildren<TMP_Text>().text);
                         break;
                     case socketProperties.NA4:
-                        GameManager.Instance.number4 = int.Parse(obj.gameObject.GetComponentInChildren<TMP_Text>().text);
+                        GameManager.Instance.number4 = int.Parse(obj.transform.GetComponentInChildren<TMP_Text>().text);
                         break;
                     default:
                         break;
                 }
             }
-            else if (obj.gameObject.tag == "Operator")
+            else if (obj.transform.tag == "Operator")
             {
-                switch (obj.gameObject.GetComponent<Snap_objects>().snapObjectProperty)
+                switch (obj.transform.GetComponent<Snap_objects>().snapObjectProperty)
                 {
                     case Snap_objects.snapObjectProperties.divide:
                         operatorName = "/";
@@ -92,9 +94,11 @@ public class XRSocketEvent : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "Calculation Games")
         {
-            XRBaseInteractable obj = args.interactable; //The interactable object that enter the socket
-                                                        //Catergory the number and operator 
-            if (obj.gameObject.GetComponent<Snap_objects>().snapObjectProperty == Snap_objects.snapObjectProperties.number)
+            //XRBaseInteractable obj = args.interactable; //The interactable object that enter the socket
+            IXRSelectInteractable obj = args.interactableObject;
+
+            //Catergory the number and operator 
+            if (obj.transform.GetComponent<Snap_objects>().snapObjectProperty == Snap_objects.snapObjectProperties.number)
             {
                 switch (socketProperty)
                 {
@@ -114,7 +118,7 @@ public class XRSocketEvent : MonoBehaviour
                         break;
                 }
             }
-            else if (obj.gameObject.tag == "Operator")
+            else if (obj.transform.tag == "Operator")
             {
                 operatorName = null;
 
