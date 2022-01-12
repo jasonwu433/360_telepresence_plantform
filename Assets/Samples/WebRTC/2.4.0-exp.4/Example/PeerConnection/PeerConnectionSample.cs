@@ -99,6 +99,7 @@ class PeerConnectionSample : MonoBehaviour
         }
 
         webCam = devices[0]; // Make the first camera as default one
+        print("Using camera: " + webCam.name);
 
         // Set web camera input as sourceImage Texture
         tex = new WebCamTexture(webCam.name);
