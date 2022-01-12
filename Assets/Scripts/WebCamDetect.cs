@@ -3,7 +3,7 @@ using System.Collections;
 
 public class WebCamDetect : MonoBehaviour
 {
-	public Texture sphereTexture;
+	public Material mat;
 	string camName;
 	public const string RICOH_DRIVER_NAME = "RICOH THETA V/Z1 FullHD";
 
@@ -35,12 +35,9 @@ public class WebCamDetect : MonoBehaviour
 				" not found. Install Ricoh streaming driver from https://topics.theta360.com/uk/faq/c_06_v/304_1/. Make sure your camera is in live streaming mode");
 		}
 
-        //Renderer rend = GetComponent<Renderer>();
+        Renderer rend = GetComponent<Renderer>();
         WebCamTexture mycam = new WebCamTexture(camName);
-
-
-        sphereTexture = mycam;
-
+        rend.material.mainTexture = mycam;
         mycam.Play();
 
         // audio
