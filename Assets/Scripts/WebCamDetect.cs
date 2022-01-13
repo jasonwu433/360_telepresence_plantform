@@ -5,7 +5,7 @@ public class WebCamDetect : MonoBehaviour
 {
 	public Material mat;
 	string camName;
-	public const string RICOH_DRIVER_NAME = "RICOH THETA V/Z1 FullHD";
+	public const string RICOH_DRIVER_NAME = "RICOH THETA V FullHD";
 
 	// change to "RICOH THETA V/Z1 4K" for Higher resolution 
 	// (and thus smaller data size)
