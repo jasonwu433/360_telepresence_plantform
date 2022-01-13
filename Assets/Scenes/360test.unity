@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 309420007}
   - component: {fileID: 309420006}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Static360Environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -239,7 +239,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe206892fb76bb449a487357638ab25e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mat: {fileID: 0}
+  streamingRes: 0
+  camName: 
+  RICOH_DRIVER_NAME: 
+  audioSource: {fileID: 0}
 --- !u!82 &309420007
 AudioSource:
   m_ObjectHideFlags: 0
@@ -427,7 +430,7 @@ GameObject:
   - component: {fileID: 1400918583}
   - component: {fileID: 1400918588}
   m_Layer: 0
-  m_Name: Sphere2
+  m_Name: Live360Environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -614,10 +617,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1400918582}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe206892fb76bb449a487357638ab25e, type: 3}
+  m_Script: {fileID: 11500000, guid: 8555c3a6bfd5659488477f2363499e9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mat: {fileID: 0}
+  streamingRes: 0
 --- !u!1 &1951622672
 GameObject:
   m_ObjectHideFlags: 0
