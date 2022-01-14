@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class RicohThetaV : MonoBehaviour
 {
+	public Material renderMaterial;
 	public streamingResolutions streamingRes;
 	public enum streamingResolutions { R_FullHD, R_4K }; // Set streaming resolution profiles	
-	public const int THETA_V_AUDIO_NUMBER = 0;
 
 	private string camName;
 	private string RICOH_DRIVER_NAME = "";
+	private const int THETA_V_AUDIO_NUMBER = 0;
 	private AudioSource audioSource;
 
 	void Start()
@@ -17,7 +18,7 @@ public class RicohThetaV : MonoBehaviour
 		ReadSteamingCamera();
 		ProcessStreamingAudio();
 		ProcessStreamingTexture();
-		InvertSphere();
+		//InvertSphere();
 	}
 
 	private void ReadSteamingCamera()
@@ -46,16 +47,18 @@ public class RicohThetaV : MonoBehaviour
 
 	private void ProcessStreamingTexture()
 	{
-		Renderer rend = GetComponent<Renderer>();
+		//Renderer rend = GetComponent<Renderer>();
 		WebCamTexture mycam = new WebCamTexture(camName);
-		rend.material.mainTexture = mycam;
+		//rend.material.mainTexture = mycam;
+		renderMaterial.mainTexture = mycam;  //change the texture of skybox material
 		mycam.Play();
 	}
-
+	
 	private void ProcessStreamingAudio()
 	{
 		audioSource = GetComponent<AudioSource>();
 		string[] audioDevices = Microphone.devices;
+
 
 		for (int i = 0; i < audioDevices.Length; i++)
 		{
@@ -63,31 +66,33 @@ public class RicohThetaV : MonoBehaviour
 		}
 
 		audioSource.clip = Microphone.Start(audioDevices[THETA_V_AUDIO_NUMBER], true, 10, 44100);
+		Debug.Log("I am using audio from: " + audioDevices[THETA_V_AUDIO_NUMBER]);
 		audioSource.loop = true;
 		while (!(Microphone.GetPosition(null) > 0)) { }
 		audioSource.Play();
 	}
 
-	private void InvertSphere()
-	{
-		Vector3[] normals = GetComponent<MeshFilter>().mesh.normals;
+	/*This function only apply for sphere 360 solution*/
+	//private void InvertSphere() 
+	//{
+	//	Vector3[] normals = GetComponent<MeshFilter>().mesh.normals;
 
-		for (int i = 0; i < normals.Length; i++)
-		{
-			normals[i] = -normals[i]; // point the normal from outside to inside
-		}
+	//	for (int i = 0; i < normals.Length; i++)
+	//	{
+	//		normals[i] = -normals[i]; // point the normal from outside to inside
+	//	}
 
-		GetComponent<MeshFilter>().sharedMesh.normals = normals;
+	//	GetComponent<MeshFilter>().sharedMesh.normals = normals;
 
-		int[] triangles = GetComponent<MeshFilter>().sharedMesh.triangles;
+	//	int[] triangles = GetComponent<MeshFilter>().sharedMesh.triangles;
 
-		for (int i = 0; i < triangles.Length; i += 3)
-		{
-			int t = triangles[i];
-			triangles[i] = triangles[i + 2];
-			triangles[i + 2] = t;
-		}
+	//	for (int i = 0; i < triangles.Length; i += 3)
+	//	{
+	//		int t = triangles[i];
+	//		triangles[i] = triangles[i + 2];
+	//		triangles[i + 2] = t;
+	//	}
 
-		GetComponent<MeshFilter>().sharedMesh.triangles = triangles;
-	}
+	//	GetComponent<MeshFilter>().sharedMesh.triangles = triangles;
+	//}
 }

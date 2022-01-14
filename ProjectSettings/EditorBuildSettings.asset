@@ -4,10 +4,7 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
-    path: Assets/Samples/WebRTC/2.4.0-exp.4/Example/PeerConnection/PeerConnection.unity
-    guid: b6162a25306134a9ea9c9c7556e5f136
+  m_Scenes: []
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: dff420c7371966d44abaf9b273d4e606, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 6f8fe51745254e24591d3ede66560b95, type: 2}
