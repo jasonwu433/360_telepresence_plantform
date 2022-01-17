@@ -14,8 +14,7 @@ public class DashboardManager : MonoBehaviour
 
     private WebCamTexture tex;
     
-
-    private void OnStart()
+    public void StartButtonOnclick()
     {
         startButton.interactable = false;
 
