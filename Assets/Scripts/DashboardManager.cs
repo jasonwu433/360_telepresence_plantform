@@ -9,22 +9,19 @@ using UnityEngine.UI;
 public class DashboardManager : MonoBehaviour
 {
     [SerializeField] private Button startButton;
-    [SerializeField] private Camera virtualCamera;
+    [SerializeField] private RenderTexture avatarCameraTexture;
     [SerializeField] private RawImage receiveImage;
-
-    private WebCamTexture tex;
     
     public void StartButtonOnclick()
     {
         startButton.interactable = false;
 
-        if(virtualCamera != null)
+        if(avatarCameraTexture != null)
         {
-            tex = new WebCamTexture(virtualCamera.name);
+            receiveImage.texture = avatarCameraTexture;
+            receiveImage.color = Color.white;
         }
 
-        receiveImage.texture = tex;
-        receiveImage.color = Color.white;
-        tex.Play();
+        
     }
 }

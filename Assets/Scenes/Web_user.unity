@@ -174,7 +174,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: 1372938d62ae694479aab8d961e679d7, type: 2}
   m_TargetDisplay: 1
   m_TargetEye: 3
   m_HDR: 1
@@ -200,7 +200,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 61059627}
   m_LocalRotation: {x: 0, y: 0.9961947, z: -0.08715578, w: 0}
-  m_LocalPosition: {x: -0.2, y: 1.26, z: 2.18}
+  m_LocalPosition: {x: 0.02, y: 1.38, z: 2.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1787585046}
@@ -896,7 +896,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startButton: {fileID: 1704711052}
-  virtualCamera: {fileID: 61059628}
+  avatarCameraTexture: {fileID: 8400000, guid: 1372938d62ae694479aab8d961e679d7, type: 2}
   receiveImage: {fileID: 1483205918}
 --- !u!4 &739327487
 Transform:
