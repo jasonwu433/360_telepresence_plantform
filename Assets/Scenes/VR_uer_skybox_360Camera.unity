@@ -1906,8 +1906,7 @@ MonoBehaviour:
   targetIP: 
   port: 8025
   sendRate: 0.2
-  player1: {fileID: 0}
-  player2: {fileID: 0}
+  player: {fileID: 1677618270}
 --- !u!4 &1693980856
 Transform:
   m_ObjectHideFlags: 0

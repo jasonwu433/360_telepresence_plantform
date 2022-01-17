@@ -1746,10 +1746,9 @@ MonoBehaviour:
   lastSent: 
   thisIP: 
   targetIP: 
-  port: 0
+  port: 8025
   sendRate: 0.2
-  player1: {fileID: 0}
-  player2: {fileID: 0}
+  player: {fileID: 1787585047}
 --- !u!1 &1680837517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2196,6 +2195,11 @@ PrefabInstance:
 --- !u!4 &1787585046 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 54df01bf951f12c4197560e12c945bab, type: 3}
+  m_PrefabInstance: {fileID: 1787585045}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1787585047 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 54df01bf951f12c4197560e12c945bab, type: 3}
   m_PrefabInstance: {fileID: 1787585045}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1910279197

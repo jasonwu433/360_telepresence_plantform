@@ -50,9 +50,9 @@ public class VoipNetworkManager : MonoBehaviour
         //}
         while (!clientAvailable)
         {
-            if (AvatarNetworkManager.instance.connectionStatus == AvatarNetworkManager.connectionStatuses.ConnectedHost) { clientA = AvatarNetworkManager.instance.player2; }
-            else if (AvatarNetworkManager.instance.connectionStatus == AvatarNetworkManager.connectionStatuses.ConnectedClient) { clientA = AvatarNetworkManager.instance.player1; }
-
+            if (AvatarNetworkManager.instance.connectionStatus == AvatarNetworkManager.connectionStatuses.ConnectedHost || AvatarNetworkManager.instance.connectionStatus == AvatarNetworkManager.connectionStatuses.ConnectedClient)
+            { clientA = AvatarNetworkManager.instance.player; }
+           
             if (clientA)
             {
                 voice = clientA.GetComponent<AudioSource>();

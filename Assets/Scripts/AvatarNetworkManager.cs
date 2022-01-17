@@ -18,7 +18,7 @@ public class AvatarNetworkManager : MonoBehaviour
     [SerializeField] bool RX; // receive
     public dataTypes dataTypeSent = dataTypes.NA;
     public dataTypes dataTypeReceived = dataTypes.NA;
-    public enum dataTypes { NA, P1, P2, generic, voice, M1, M2 }
+    public enum dataTypes { NA, Trans, generic, voice, Mesh}
     [SerializeField] string lastReceived;
     [SerializeField] string lastSent;
     public string thisIP;
@@ -38,14 +38,11 @@ public class AvatarNetworkManager : MonoBehaviour
     string[] dataSplitSet, MposData, MrotData;
 
     // Avatar transmission
-    [Header("Model 1")]
-    public GameObject player1;
+    [Header("Avatar Model")]
+    public GameObject player;
 
-    [Header("Model 2")]
-    public GameObject player2;
-
-    Transform[] player1Joints, player2Joints;
-    Mesh player1Mesh, player2Mesh;
+    Transform[] playerJoints;
+    Mesh playerMesh;
     private static int HeaderSize = sizeof(int) * 2;
 
     // "connection" things
@@ -103,19 +100,16 @@ public class AvatarNetworkManager : MonoBehaviour
 
     private void InitAvatarsData()
     {
-        if(player1 == null && player2 == null)
+        if(player == null )
         {
-            Debug.LogError("Please reference the player1 or player2!");
+            Debug.LogError("Please reference the player or player2!");
             return;
         }
         else
         {
-            player1Joints = player1.GetComponentsInChildren<Transform>();
-            player2Joints = player2.GetComponentsInChildren<Transform>();
-            player1Mesh = player1.GetComponentInChildren<SkinnedMeshRenderer>().sharedMesh;
-            player2Mesh = player2.GetComponentInChildren<SkinnedMeshRenderer>().sharedMesh;
-            
-            //Debug.Log("The number is: " + player1Mesh.vertices.Length);
+            playerJoints = player.GetComponentsInChildren<Transform>();
+            playerMesh = player.GetComponentInChildren<SkinnedMeshRenderer>().sharedMesh;          
+            //Debug.Log("The number is: " + playerMesh.vertices.Length);
         }     
     }
 
@@ -284,18 +278,10 @@ public class AvatarNetworkManager : MonoBehaviour
                 }
             }
             // read mesh
-            else if ((dataTypes)byte1 == dataTypes.M1 || (dataTypes)byte1 == dataTypes.M2)
+            else if ((dataTypes)byte1 == dataTypes.Mesh)
             {
-                if ((dataTypes)byte1 == dataTypes.M1)
-                { 
-                    clientType = dataTypes.M1;
-                    player1Mesh = MeshDeserialize(removeByteFromArray(d));              
-                }
-                else 
-                { 
-                    clientType = dataTypes.M2;
-                    player2Mesh = MeshDeserialize(removeByteFromArray(d));
-                }            
+                clientType = dataTypes.Mesh;
+                playerMesh = MeshDeserialize(removeByteFromArray(d));                
             }
 
             // limb inputs fall into multiple categories for this project. Should be switched to a common data type as above.
@@ -307,8 +293,7 @@ public class AvatarNetworkManager : MonoBehaviour
                 {
                     MposData = dataSplitSet[0].Split('|');
                     MrotData = dataSplitSet[1].Split('|');
-                    if ((dataTypes)byte1 == dataTypes.P1) { clientType = dataTypes.P1; }
-                    else if ((dataTypes)byte1 == dataTypes.P2) { clientType = dataTypes.P2; }
+                    if ((dataTypes)byte1 == dataTypes.Trans) { clientType = dataTypes.Trans; }
                     ReadTransforms(MposData, MrotData, clientType);
                 }
             }
@@ -385,65 +370,39 @@ public class AvatarNetworkManager : MonoBehaviour
     string WriteTransforms(dataTypes sentType)
     {
         string data = null;
-        if (sentType == dataTypes.P1)
+        if (sentType == dataTypes.Trans)
         {           
-            for (int i=0; i<player1Joints.Length; i++)
+            for (int i=0; i<playerJoints.Length; i++)
             {
-                data += (player1Joints[i].position.ToString("F3") + "|" );
+                data += (playerJoints[i].position.ToString("F3") + "|" );
             }
             data = data.Remove(data.Length - 1);
             data += ":";
-            for (int i = 0; i < player1Joints.Length; i++)
+            for (int i = 0; i < playerJoints.Length; i++)
             {
-                data += (player1Joints[i].rotation.ToString("F3") + "|");
+                data += (playerJoints[i].rotation.ToString("F3") + "|");
             }
             data = data.Remove(data.Length - 1);
-        }
-        else if(sentType == dataTypes.P2)
-        {
-            for (int i=0; i< player2Joints.Length; i++)
-            {
-                data += (player2Joints[i].position.ToString("F3") + "|");
-            }
-            data = data.Remove(data.Length - 1);
-            data += ":";
-            for (int i = 0; i < player1Joints.Length; i++)
-            {
-                data += (player2Joints[i].rotation.ToString("F3") + "|");
-            }
-            data = data.Remove(data.Length - 1);
-
         }
         return data;
     }
 
     void ReadTransforms(string[] posData, string[] RotData, dataTypes dt)
     {
-        if (dt == dataTypes.P1)
+        if (dt == dataTypes.Trans)
         {
             for (int i = 0; i < posData.Length; i++)
             {
-                player1Joints[i].position = StringToVector3(posData[i]);
-                player1Joints[i].rotation = StringToQuaternion(RotData[i]);
+                playerJoints[i].position = StringToVector3(posData[i]);
+                playerJoints[i].rotation = StringToQuaternion(RotData[i]);
             }
         }
-        else if(dt == dataTypes.P2)
-        {
-            for (int i = 0; i < RotData.Length; i++)
-            {
-                player2Joints[i].position = StringToVector3(posData[i]);
-                player2Joints[i].rotation = StringToQuaternion(RotData[i]);
-            }
-        }
-
     }
 
     private byte[] WriteMeshes(dataTypes sentType)
     {
         byte[] data = null;
-        if (sentType == dataTypes.M1) { data = MeshSerialize(player1Mesh); }
-        else if (sentType == dataTypes.M2) { data = MeshSerialize(player2Mesh); }
-
+        if (sentType == dataTypes.Mesh) { data = MeshSerialize(playerMesh); }
         return data;
     }
 
