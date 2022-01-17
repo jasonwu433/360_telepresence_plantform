@@ -118,7 +118,7 @@ public class AvatarNetworkManager : MonoBehaviour
     {
         if (client == null) { TX = false; return; } // abandon if no client
 
-        else if (connectionStatus == connectionStatuses.ConnectedHost || connectionStatus == connectionStatuses.ConnectedClient)
+        else if (connectionStatus == connectionStatuses.ConnectedHost)
         {
             lastSent = WriteTransforms(dataTypeSent);
             sendData(lastSent, dataTypeSent); 
@@ -209,23 +209,26 @@ public class AvatarNetworkManager : MonoBehaviour
         RX = false;
         if (client == null) { return; }
         //if not initialized, initialize
-        if (s.stateE == null || port == 0)
+        if(connectionStatus == connectionStatuses.ConnectedClient)
         {
-            IPEndPoint e = new IPEndPoint(IPAddress.Any, port);
-            s = new UdpState
+            if (s.stateE == null || port == 0)
             {
-                stateE = e,
-                stateU = client
-            };
-            ascb = new AsyncCallback(ReceiveCallback);
-            client.BeginReceive(ascb, s);
-        }
-        //get data, switch recieved back to false, wait for listener;
-        if (messageReceived)
-        {
-            processInData(dataIn);
-            client.BeginReceive(ascb, s);
-            messageReceived = false;
+                IPEndPoint e = new IPEndPoint(IPAddress.Any, port);
+                s = new UdpState
+                {
+                    stateE = e,
+                    stateU = client
+                };
+                ascb = new AsyncCallback(ReceiveCallback);
+                client.BeginReceive(ascb, s);
+            }
+            //get data, switch recieved back to false, wait for listener;
+            if (messageReceived)
+            {
+                processInData(dataIn);
+                client.BeginReceive(ascb, s);
+                messageReceived = false;
+            }
         }
     }
 
