@@ -209,27 +209,26 @@ public class AvatarNetworkManager : MonoBehaviour
         RX = false;
         if (client == null) { return; }
         //if not initialized, initialize
-        if(connectionStatus == connectionStatuses.ConnectedClient)
+
+        if (s.stateE == null || port == 0)
         {
-            if (s.stateE == null || port == 0)
+            IPEndPoint e = new IPEndPoint(IPAddress.Any, port);
+            s = new UdpState
             {
-                IPEndPoint e = new IPEndPoint(IPAddress.Any, port);
-                s = new UdpState
-                {
-                    stateE = e,
-                    stateU = client
-                };
-                ascb = new AsyncCallback(ReceiveCallback);
-                client.BeginReceive(ascb, s);
-            }
-            //get data, switch recieved back to false, wait for listener;
-            if (messageReceived)
-            {
-                processInData(dataIn);
-                client.BeginReceive(ascb, s);
-                messageReceived = false;
-            }
+                stateE = e,
+                stateU = client
+            };
+            ascb = new AsyncCallback(ReceiveCallback);
+            client.BeginReceive(ascb, s);
         }
+        //get data, switch recieved back to false, wait for listener;
+        if (messageReceived)
+        {
+            processInData(dataIn);
+            client.BeginReceive(ascb, s);
+            messageReceived = false;
+        }
+        
     }
 
     void processInData(byte[] d)
@@ -281,7 +280,7 @@ public class AvatarNetworkManager : MonoBehaviour
                 }
             }
             // read mesh
-            else if ((dataTypes)byte1 == dataTypes.Mesh)
+            else if ((dataTypes)byte1 == dataTypes.Mesh && connectionStatus == connectionStatuses.ConnectedClient)
             {
                 clientType = dataTypes.Mesh;
                 playerMesh = MeshDeserialize(removeByteFromArray(d));                
@@ -290,14 +289,17 @@ public class AvatarNetworkManager : MonoBehaviour
             // limb inputs fall into multiple categories for this project. Should be switched to a common data type as above.
             else
             {
-                lastReceived = Encoding.UTF8.GetString(removeByteFromArray(d));
-                dataSplitSet = lastReceived.Split(':');
-                if (dataSplitSet.Length >= 2)
+                if(connectionStatus == connectionStatuses.ConnectedClient)
                 {
-                    MposData = dataSplitSet[0].Split('|');
-                    MrotData = dataSplitSet[1].Split('|');
-                    if ((dataTypes)byte1 == dataTypes.Trans) { clientType = dataTypes.Trans; }
-                    ReadTransforms(MposData, MrotData, clientType);
+                    lastReceived = Encoding.UTF8.GetString(removeByteFromArray(d));
+                    dataSplitSet = lastReceived.Split(':');
+                    if (dataSplitSet.Length >= 2)
+                    {
+                        MposData = dataSplitSet[0].Split('|');
+                        MrotData = dataSplitSet[1].Split('|');
+                        if ((dataTypes)byte1 == dataTypes.Trans) { clientType = dataTypes.Trans; }
+                        ReadTransforms(MposData, MrotData, clientType);
+                    }
                 }
             }
         }
