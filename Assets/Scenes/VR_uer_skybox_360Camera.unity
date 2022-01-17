@@ -1123,6 +1123,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 54df01bf951f12c4197560e12c945bab, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 54df01bf951f12c4197560e12c945bab, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 54df01bf951f12c4197560e12c945bab, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 54df01bf951f12c4197560e12c945bab, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1903,7 +1915,7 @@ MonoBehaviour:
   lastReceived: 
   lastSent: 
   thisIP: 
-  targetIP: 
+  targetIP: 10.34.60.108
   port: 8025
   sendRate: 0.2
   player: {fileID: 1677618270}

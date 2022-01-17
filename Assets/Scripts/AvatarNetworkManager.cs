@@ -40,9 +40,9 @@ public class AvatarNetworkManager : MonoBehaviour
     // Avatar transmission
     [Header("Avatar Model")]
     public GameObject player;
-
     Transform[] playerJoints;
     Mesh playerMesh;
+
     private static int HeaderSize = sizeof(int) * 2;
 
     // "connection" things
@@ -102,7 +102,7 @@ public class AvatarNetworkManager : MonoBehaviour
     {
         if(player == null )
         {
-            Debug.LogError("Please reference the player or player2!");
+            Debug.LogError("Please reference the player");
             return;
         }
         else
@@ -120,12 +120,24 @@ public class AvatarNetworkManager : MonoBehaviour
 
         else if (connectionStatus == connectionStatuses.ConnectedHost)
         {
-            lastSent = WriteTransforms(dataTypeSent);
-            sendData(lastSent, dataTypeSent); 
-
-            byte[] m = WriteMeshes(dataTypeSent);
-            sendData(m, dataTypeSent);
+            SendTrans();
+            SendMesh();
         }
+    }
+
+    void SendTrans()
+    {
+        dataTypeSent = dataTypes.Trans;
+        Debug.Log("Data type send: " + dataTypeSent);
+        lastSent = WriteTransforms(dataTypeSent);
+        sendData(lastSent, dataTypeSent);
+    }
+
+    void SendMesh()
+    {
+        dataTypeSent = dataTypes.Mesh;
+        byte[] m = WriteMeshes(dataTypeSent);
+        sendData(m, dataTypeSent);       
     }
 
     //send unique command. must have identifiable characters for receiving end.
@@ -408,6 +420,13 @@ public class AvatarNetworkManager : MonoBehaviour
     {
         byte[] data = null;
         if (sentType == dataTypes.Mesh) { data = MeshSerialize(playerMesh); }
+        return data;
+    }
+
+    private byte[] WriteMeshes(Mesh mesh)
+    {
+        byte[] data = null;
+        data = MeshSerialize(mesh);
         return data;
     }
 
