@@ -21,7 +21,6 @@ public class DashboardManager : MonoBehaviour
             receiveImage.texture = avatarCameraTexture;
             receiveImage.color = Color.white;
         }
-
-        
+    
     }
 }
