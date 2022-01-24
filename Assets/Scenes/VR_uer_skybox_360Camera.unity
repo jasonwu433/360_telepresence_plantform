@@ -1040,6 +1040,10 @@ PrefabInstance:
       propertyPath: m_RequestedTrackingOriginMode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4586970787758388745, guid: 1a8f77c43e9b5f546aba721d6982fdee, type: 3}
+      propertyPath: near clip plane
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 4586970787758388788, guid: 1a8f77c43e9b5f546aba721d6982fdee, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.01
