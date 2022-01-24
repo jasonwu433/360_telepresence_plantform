@@ -13,6 +13,8 @@ public class DashboardManager : MonoBehaviour
     [SerializeField] private RenderTexture avatarFaceCameraTexture;
     [SerializeField] private RawImage avatarBodyWindowImage;
     [SerializeField] private RawImage avatarFaceWindowImage;
+    [SerializeField] private Camera faceCamera;
+    [SerializeField] private GameObject avatarHead;
 
     public void StartButtonOnclick()
     {
@@ -34,4 +36,18 @@ public class DashboardManager : MonoBehaviour
             img.color = Color.white;
         }
     }
+
+    private void ControlAvatarFaceCamera()
+    {
+        if(faceCamera != null && avatarHead != null)
+        {
+            //calculate camera relative position
+            faceCamera.transform.position = new Vector3(0, avatarHead.transform.position.y, avatarHead.transform.position.z + 0.3f);
+            faceCamera.transform.rotation.eulerAngles.Set(8, 180, 0);
+        }
+        else
+            Debug.LogError("Please reference the avatar face camera and head");
+    }
+
+
 }
