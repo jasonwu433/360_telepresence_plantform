@@ -9,18 +9,29 @@ using UnityEngine.UI;
 public class DashboardManager : MonoBehaviour
 {
     [SerializeField] private Button startButton;
-    [SerializeField] private RenderTexture avatarCameraTexture;
-    [SerializeField] private RawImage receiveImage;
-    
+    [SerializeField] private RenderTexture avatarBodyCameraTexture;
+    [SerializeField] private RenderTexture avatarFaceCameraTexture;
+    [SerializeField] private RawImage avatarBodyWindowImage;
+    [SerializeField] private RawImage avatarFaceWindowImage;
+
     public void StartButtonOnclick()
     {
         startButton.interactable = false;
+        AvatarDisplay(avatarBodyWindowImage, avatarBodyCameraTexture, avatarFaceWindowImage, avatarFaceCameraTexture);
+    }
 
-        if(avatarCameraTexture != null)
+    private void AvatarDisplay(RawImage bodyWindow, RenderTexture bodyCameraRenderTexture, RawImage faceWindow, RenderTexture faceCameraRenderTexture)
+    {
+        VirtualCameraDisplay(bodyWindow, bodyCameraRenderTexture); // bodywindow
+        VirtualCameraDisplay(faceWindow, faceCameraRenderTexture); // facewindow
+    }
+
+    private void VirtualCameraDisplay(RawImage img, RenderTexture texture)
+    {
+        if (img != null && texture != null)
         {
-            receiveImage.texture = avatarCameraTexture;
-            receiveImage.color = Color.white;
+            img.texture = texture;
+            img.color = Color.white;
         }
-    
     }
 }
