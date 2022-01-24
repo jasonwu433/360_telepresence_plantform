@@ -615,8 +615,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 531921990}
-  m_LocalRotation: {x: 0.23930399, y: 0.14626281, z: -0.63561505, w: 0.7192597}
-  m_LocalPosition: {x: 0.71160614, y: -0.19998872, z: -0.03935492}
+  m_LocalRotation: {x: 0.3888735, y: -0.41472968, z: 0.08527029, w: 0.8182333}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 656697364}
@@ -626,7 +626,7 @@ Transform:
   - {fileID: 761972148}
   m_Father: {fileID: 686500384}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: -60, z: -15}
 --- !u!4 &551646005 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5561726693919234023, guid: 54df01bf951f12c4197560e12c945bab, type: 3}
@@ -1042,7 +1042,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4586970787758388745, guid: 1a8f77c43e9b5f546aba721d6982fdee, type: 3}
       propertyPath: near clip plane
-      value: 0.1
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 4586970787758388788, guid: 1a8f77c43e9b5f546aba721d6982fdee, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1339,7 +1339,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1399728816}
   m_LocalRotation: {x: -0.020918282, y: -1.8001432e-11, z: 1.4973812e-10, w: 0.9997812}
-  m_LocalPosition: {x: 0.01, y: -0.019780517, z: -0.042}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1183323709}
@@ -2067,8 +2067,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1908386787}
-  m_LocalRotation: {x: 0.23930407, y: -0.14626256, z: 0.6356151, w: 0.7192596}
-  m_LocalPosition: {x: -0.71160614, y: -0.19998872, z: -1.268}
+  m_LocalRotation: {x: 0.38887346, y: 0.41472965, z: -0.08527036, w: 0.8182332}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1662521698}
@@ -2078,7 +2078,7 @@ Transform:
   - {fileID: 213916435}
   m_Father: {fileID: 2145986822}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 60, z: 15}
 --- !u!1 &1951622672
 GameObject:
   m_ObjectHideFlags: 0
