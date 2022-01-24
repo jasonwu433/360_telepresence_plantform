@@ -1013,6 +1013,8 @@ MonoBehaviour:
   avatarFaceCameraTexture: {fileID: 8400000, guid: 9b9f2b40e422f8540a446d7a68dce703, type: 2}
   avatarBodyWindowImage: {fileID: 1483205918}
   avatarFaceWindowImage: {fileID: 1910279199}
+  faceCamera: {fileID: 1007429198}
+  avatarHead: {fileID: 1787585048}
 --- !u!4 &739327487
 Transform:
   m_ObjectHideFlags: 0
@@ -1421,13 +1423,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1007429196}
-  m_LocalRotation: {x: -0.0000000015640323, y: 0.99759245, z: -0.06934985, w: -0.0000000040694856}
-  m_LocalPosition: {x: 0, y: 1.681633, z: 0.31826448}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1787585046}
   m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 25, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &1007429198
 Camera:
   m_ObjectHideFlags: 0
@@ -2662,6 +2664,11 @@ Transform:
 --- !u!1 &1787585047 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 54df01bf951f12c4197560e12c945bab, type: 3}
+  m_PrefabInstance: {fileID: 1787585045}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1787585048 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1171286880607848447, guid: 54df01bf951f12c4197560e12c945bab, type: 3}
   m_PrefabInstance: {fileID: 1787585045}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1910279197

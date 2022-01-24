@@ -16,6 +16,11 @@ public class DashboardManager : MonoBehaviour
     [SerializeField] private Camera faceCamera;
     [SerializeField] private GameObject avatarHead;
 
+    private void Update()
+    {
+        ControlAvatarFaceCamera();
+    }
+
     public void StartButtonOnclick()
     {
         startButton.interactable = false;
