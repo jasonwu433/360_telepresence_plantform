@@ -47,8 +47,8 @@ public class DashboardManager : MonoBehaviour
         if(faceCamera != null && avatarHead != null)
         {
             //calculate camera relative position
-            faceCamera.transform.position = new Vector3(0, avatarHead.transform.position.y, avatarHead.transform.position.z + 0.3f);
-            faceCamera.transform.rotation.eulerAngles.Set(8, 180, 0);
+            faceCamera.transform.position = new Vector3(0, avatarHead.transform.position.y, avatarHead.transform.position.z + 0.5f);
+            faceCamera.transform.rotation = avatarHead.transform.rotation;
         }
         else
             Debug.LogError("Please reference the avatar face camera and head");
