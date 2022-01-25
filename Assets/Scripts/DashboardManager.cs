@@ -15,6 +15,7 @@ public class DashboardManager : MonoBehaviour
     [SerializeField] private RawImage avatarFaceWindowImage;
     [SerializeField] private Camera faceCamera;
     [SerializeField] private GameObject avatarHead;
+    public float facCameraOffset = 0.5f;
 
     private void Update()
     {
@@ -44,11 +45,10 @@ public class DashboardManager : MonoBehaviour
 
     private void ControlAvatarFaceCamera()
     {
-        if(faceCamera != null && avatarHead != null)
+        if (faceCamera != null && avatarHead != null)
         {
             //calculate camera relative position
-            faceCamera.transform.position = new Vector3(0, avatarHead.transform.position.y, avatarHead.transform.position.z + 0.5f);
-            faceCamera.transform.rotation = avatarHead.transform.rotation;
+            faceCamera.transform.position = new Vector3(avatarHead.transform.position.x, avatarHead.transform.position.y, avatarHead.transform.position.z + facCameraOffset);
         }
         else
             Debug.LogError("Please reference the avatar face camera and head");
