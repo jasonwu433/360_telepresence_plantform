@@ -12,6 +12,7 @@ namespace ViveSR
         {
             public class SRanipal_AvatarEyeSample_v2 : MonoBehaviour
             {
+                public Vector3 axisRotation;
                 [SerializeField] private Transform[] EyesModels = new Transform[0];
                 [SerializeField] private List<EyeShapeTable_v2> EyeShapeTables;
                 /// <summary>
@@ -34,6 +35,7 @@ namespace ViveSR
                 private const int NUM_OF_EYES = 2;
                 private static EyeData_v2 eyeData = new EyeData_v2();
                 private bool eye_callback_registered = false;
+
                 private void Start()
                 {
                     if (!SRanipal_Eye_Framework.Instance.EnableEye)
@@ -192,6 +194,8 @@ namespace ViveSR
                     {
                         Vector3 target = EyeAnchors[i].transform.TransformPoint(gazeDirectionCombinedLocal);
                         EyesModels[i].LookAt(target);
+                        EyesModels[i].Rotate(axisRotation, Space.Self);
+
                     }
                 }
 
