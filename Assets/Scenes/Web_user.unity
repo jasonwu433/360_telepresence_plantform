@@ -2521,6 +2521,7 @@ MonoBehaviour:
   port: 8025
   sendRate: 0.2
   player: {fileID: 1834348947}
+  skinnedMeshRenderer: {fileID: 1834348948}
 --- !u!1 &1680837517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2908,6 +2909,11 @@ Transform:
 --- !u!1 &1834348947 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 18efbf8b636117344a24b3f95a129395, type: 3}
+  m_PrefabInstance: {fileID: 1834348945}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &1834348948 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3530361142830668973, guid: 18efbf8b636117344a24b3f95a129395, type: 3}
   m_PrefabInstance: {fileID: 1834348945}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1910279197
