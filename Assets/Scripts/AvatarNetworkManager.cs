@@ -108,7 +108,7 @@ public class AvatarNetworkManager : MonoBehaviour
         else
         {
             playerJoints = player.GetComponentsInChildren<Transform>();
-            playerMesh = player.GetComponentInChildren<SkinnedMeshRenderer>().sharedMesh;          
+            playerMesh = player.GetComponentInChildren<SkinnedMeshRenderer>().sharedMesh;
             //Debug.Log("The number is: " + playerMesh.vertices.Length);
         }     
     }
