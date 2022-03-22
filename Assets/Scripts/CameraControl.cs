@@ -5,7 +5,8 @@ using UnityEngine;
 public class CameraControl : MonoBehaviour
 {
     public GameObject referencePoint;
-    public float distanceOffset = 3.0f;
+    public float distanceOffset = 2.0f;
+    public float hightOffset = 1f;
     public enum cameraType { body, head}
 
     public cameraType type = cameraType.body;
@@ -26,8 +27,9 @@ public class CameraControl : MonoBehaviour
     {
         if(type == cameraType.body)
         {
-            var temp = referencePoint.transform.position.z - distanceOffset;
-            gameObject.transform.position = new Vector3(referencePoint.transform.position.x, referencePoint.transform.position.y, temp);
+            var temp1 = referencePoint.transform.position.z + distanceOffset;
+            var temp2 = referencePoint.transform.position.y + hightOffset;
+            gameObject.transform.position = new Vector3(referencePoint.transform.position.x, temp2, temp1);
         }
     }
 
