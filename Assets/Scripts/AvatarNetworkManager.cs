@@ -126,7 +126,7 @@ public class AvatarNetworkManager : MonoBehaviour
         {
             SendTrans();
             SendMesh();
-            SendMesh2();
+            //SendMesh2();
         }
     }
 
