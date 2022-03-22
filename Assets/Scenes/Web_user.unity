@@ -1549,7 +1549,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   referencePoint: {fileID: 1834348949}
-  distanceOffset: 3
+  distanceOffset: 1.5
+  hightOffset: 0.5
   type: 0
 --- !u!1 &1007429196
 GameObject:
