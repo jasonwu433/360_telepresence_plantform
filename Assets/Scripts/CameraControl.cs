@@ -5,8 +5,8 @@ using UnityEngine;
 public class CameraControl : MonoBehaviour
 {
     public GameObject referencePoint;
-    public float distanceOffset = 2.0f;
-    public float hightOffset = 1f;
+    public float distanceOffset = 1.5f;
+    public float hightOffset = 0.5f;
     public enum cameraType { body, head}
 
     public cameraType type = cameraType.body;
