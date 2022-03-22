@@ -26,8 +26,8 @@ public class CameraControl : MonoBehaviour
     {
         if(type == cameraType.body)
         {
-            var temp = referencePoint.transform.position.x - distanceOffset;
-            gameObject.transform.position = new Vector3(temp, referencePoint.transform.position.y, referencePoint.transform.position.z);
+            var temp = referencePoint.transform.position.z - distanceOffset;
+            gameObject.transform.position = new Vector3(referencePoint.transform.position.x, referencePoint.transform.position.y, temp);
         }
     }
 
