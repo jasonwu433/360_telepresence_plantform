@@ -42,7 +42,7 @@ public class AvatarNetworkManager : MonoBehaviour
     public GameObject player;
     Transform[] playerJoints;
     Mesh playerMesh;
-    //Mesh playerMesh2;
+    Mesh playerMesh2;
     public SkinnedMeshRenderer skinnedMeshRenderer1, skinnedMeshRenderer2;
 
     private static int HeaderSize = sizeof(int) * 2;
@@ -112,7 +112,7 @@ public class AvatarNetworkManager : MonoBehaviour
             playerJoints = player.GetComponentsInChildren<Transform>();
             //playerMesh = player.GetComponentInChildren<SkinnedMeshRenderer>().sharedMesh;
             playerMesh = skinnedMeshRenderer1.sharedMesh;
-            //playerMesh2 = skinnedMeshRenderer2.sharedMesh;
+            playerMesh2 = skinnedMeshRenderer2.sharedMesh;
             //Debug.Log("The number is: " + playerMesh.vertices.Length);
         }     
     }
@@ -126,7 +126,7 @@ public class AvatarNetworkManager : MonoBehaviour
         {
             SendTrans();
             SendMesh();
-            //SendMesh2();
+            SendMesh2();
         }
     }
 
@@ -142,7 +142,8 @@ public class AvatarNetworkManager : MonoBehaviour
     {
         dataTypeSent = dataTypes.Mesh1;
         byte[] m = WriteMeshes(dataTypeSent);
-        sendData(m, dataTypeSent);       
+        sendData(m, dataTypeSent);
+        Debug.Log("Sending mesh1");
     }
 
     void SendMesh2()
@@ -150,6 +151,7 @@ public class AvatarNetworkManager : MonoBehaviour
         dataTypeSent = dataTypes.Mesh2;
         byte[] m = WriteMeshes(dataTypeSent);
         sendData(m, dataTypeSent);
+        Debug.Log("Sending mesh2");
     }
 
     //send unique command. must have identifiable characters for receiving end.
@@ -307,13 +309,15 @@ public class AvatarNetworkManager : MonoBehaviour
             else if ((dataTypes)byte1 == dataTypes.Mesh1 && connectionStatus == connectionStatuses.ConnectedClient)
             {
                 clientType = dataTypes.Mesh1;
-                playerMesh = MeshDeserialize(removeByteFromArray(d));                
+                playerMesh = MeshDeserialize(removeByteFromArray(d));
+                Debug.Log("Reading mesh1");
             }
-            //else if ((dataTypes)byte1 == dataTypes.Mesh2 && connectionStatus == connectionStatuses.ConnectedClient)
-            //{
-            //    clientType = dataTypes.Mesh2;
-            //    playerMesh2 = MeshDeserialize(removeByteFromArray(d));
-            //}
+            else if ((dataTypes)byte1 == dataTypes.Mesh2 && connectionStatus == connectionStatuses.ConnectedClient)
+            {
+                clientType = dataTypes.Mesh2;
+                playerMesh2 = MeshDeserialize(removeByteFromArray(d));
+                Debug.Log("Reading mesh2");
+            }
 
             // limb inputs fall into multiple categories for this project. Should be switched to a common data type as above.
             else
@@ -437,7 +441,7 @@ public class AvatarNetworkManager : MonoBehaviour
     {
         byte[] data = null;
         if (sentType == dataTypes.Mesh1) { data = MeshSerialize(playerMesh); }
-        //if (sentType == dataTypes.Mesh2) { data = MeshSerialize(playerMesh2); }
+        if (sentType == dataTypes.Mesh2) { data = MeshSerialize(playerMesh2); }
         return data;
     }
 
