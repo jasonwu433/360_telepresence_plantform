@@ -25,8 +25,6 @@ public class CameraControl : MonoBehaviour
 
     public void UpdateCamera()
     {
-        Debug.DrawRay(transform.position, transform.forward, Color.yellow);
-        Debug.DrawRay(referencePoint.transform.position, referencePoint.transform.up, Color.red);
         if (type == cameraType.body)
         {
             var hightVect = new Vector3(0, hightOffset, 0);
@@ -45,9 +43,6 @@ public class CameraControl : MonoBehaviour
             transform.Rotate(0, 0, 90);
             transform.position = referencePoint.transform.position + referencePoint.transform.up * distanceOffset + hightVect;
         }
-        
-        
-
     }
 
     

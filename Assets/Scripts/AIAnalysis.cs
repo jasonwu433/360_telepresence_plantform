@@ -13,17 +13,21 @@ public class AIAnalysis : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var temp = "Loading...";
-
-        hr_str = temp;
-        gsr_str = temp;
-        emotion_str = temp;
+        ReadExternalData();
     }
 
     // Update is called once per frame
     void Update()
     {
         InformationDisplay();
+    }
+
+    public void ReadExternalData()
+    {
+        var temp = "Loading...";
+        hr_str = temp;
+        gsr_str = temp;
+        emotion_str = temp;
     }
 
     public void InformationDisplay()
