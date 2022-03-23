@@ -57,6 +57,8 @@ public class AvatarNetworkManager : MonoBehaviour
     static byte[] micData;
     public static bool testMic;
 
+    private float[] blendshapesWeights;
+
     private void Awake()
     {
         instance = this;
@@ -111,6 +113,8 @@ public class AvatarNetworkManager : MonoBehaviour
             playerJoints = player.GetComponentsInChildren<Transform>();
             //playerMesh = player.GetComponentInChildren<SkinnedMeshRenderer>().sharedMesh;
             playerMesh = skinnedMeshRenderer.sharedMesh;
+
+            blendshapesWeights = new float[playerMesh.blendShapeCount];
             //Debug.Log("The number is: " + playerMesh.vertices.Length);
         }     
     }
@@ -123,7 +127,7 @@ public class AvatarNetworkManager : MonoBehaviour
         else if (connectionStatus == connectionStatuses.ConnectedHost)
         {
             SendTrans();
-            SendMesh();
+            //SendMesh();
             SendWeights();
         }
     }
@@ -141,6 +145,7 @@ public class AvatarNetworkManager : MonoBehaviour
         dataTypeSent = dataTypes.BlendshapeWeight;
         lastSent = WriteBlendshapesWeights(dataTypeSent);
         sendData(lastSent, dataTypeSent);
+        Debug.Log("Sending blendshapes");
     }
 
     void SendMesh()
@@ -314,13 +319,13 @@ public class AvatarNetworkManager : MonoBehaviour
             {
                 lastReceived = Encoding.UTF8.GetString(removeByteFromArray(d));
                 String[] weightStr = lastReceived.Split('|');
-                float[] weightFloat = null;
                 for(int i=0; i<weightStr.Length; i++)
                 {
-                    weightFloat[i] = (float)Convert.ToDouble(weightStr[i]);
+                    blendshapesWeights[i] = (float)Convert.ToDouble(weightStr[i]);
                 }
                 clientType = dataTypes.BlendshapeWeight;
-                ReadBlendshapesWeights(weightFloat, clientType);
+                ReadBlendshapesWeights(blendshapesWeights, clientType);
+                Debug.Log("Reading blendshapes");
 
             }
 
