@@ -18,7 +18,7 @@ public class AvatarNetworkManager : MonoBehaviour
     [SerializeField] bool RX; // receive
     public dataTypes dataTypeSent = dataTypes.NA;
     public dataTypes dataTypeReceived = dataTypes.NA;
-    public enum dataTypes { NA, Trans, generic, voice, Mesh}
+    public enum dataTypes { NA, Trans, generic, voice, Mesh, BlendshapeWeight}
     [SerializeField] string lastReceived;
     [SerializeField] string lastSent;
     public string thisIP;
@@ -124,6 +124,7 @@ public class AvatarNetworkManager : MonoBehaviour
         {
             SendTrans();
             SendMesh();
+            SendWeights();
         }
     }
 
@@ -132,6 +133,13 @@ public class AvatarNetworkManager : MonoBehaviour
         dataTypeSent = dataTypes.Trans;
         Debug.Log("Data type send: " + dataTypeSent);
         lastSent = WriteTransforms(dataTypeSent);
+        sendData(lastSent, dataTypeSent);
+    }
+
+    void SendWeights()
+    {
+        dataTypeSent = dataTypes.BlendshapeWeight;
+        lastSent = WriteBlendshapesWeights(dataTypeSent);
         sendData(lastSent, dataTypeSent);
     }
 
@@ -301,6 +309,20 @@ public class AvatarNetworkManager : MonoBehaviour
                 playerMesh = MeshDeserialize(removeByteFromArray(d));
                 Debug.Log("Reading mesh1");
             }
+            // read blendshapes
+            else if ((dataTypes)byte1 == dataTypes.BlendshapeWeight && connectionStatus == connectionStatuses.ConnectedClient)
+            {
+                lastReceived = Encoding.UTF8.GetString(removeByteFromArray(d));
+                String[] weightStr = lastReceived.Split('|');
+                float[] weightFloat = null;
+                for(int i=0; i<weightStr.Length; i++)
+                {
+                    weightFloat[i] = (float)Convert.ToDouble(weightStr[i]);
+                }
+                clientType = dataTypes.BlendshapeWeight;
+                ReadBlendshapesWeights(weightFloat, clientType);
+
+            }
 
             // limb inputs fall into multiple categories for this project. Should be switched to a common data type as above.
             else
@@ -384,6 +406,41 @@ public class AvatarNetworkManager : MonoBehaviour
             else
             {
                 connectionStatus = connectionStatuses.ConnectedHost;
+            }
+        }
+    }
+
+    float[] GetBlendshapesWeights(SkinnedMeshRenderer skinnedMeshRenderer)
+    {
+        var index = skinnedMeshRenderer.sharedMesh.blendShapeCount;
+        float[] Weights = new float[index];
+        for(int i=0; i<index; i++)
+        {
+            Weights[i] = skinnedMeshRenderer.GetBlendShapeWeight(i);
+        }
+        return Weights;
+    }
+    string WriteBlendshapesWeights(dataTypes sentType)
+    {
+        string data = null;
+        if(sentType == dataTypes.BlendshapeWeight)
+        {
+            for(int i=0; i<playerMesh.blendShapeCount; i++)
+            {
+                data += (GetBlendshapesWeights(skinnedMeshRenderer)[i].ToString("F3") + "|");
+            }
+            data = data.Remove(data.Length - 1);
+        }
+        return data;
+    }
+
+    void ReadBlendshapesWeights(float[] weights, dataTypes dt)
+    {
+        if(dt == dataTypes.BlendshapeWeight)
+        {
+            for(int i=0; i<weights.Length; i++)
+            {
+                skinnedMeshRenderer.SetBlendShapeWeight(i, weights[i]);
             }
         }
     }
