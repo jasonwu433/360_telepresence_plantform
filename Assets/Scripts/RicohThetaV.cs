@@ -72,27 +72,28 @@ public class RicohThetaV : MonoBehaviour
 		audioSource.Play();
 	}
 
-	/*This function only apply for sphere 360 solution*/
-	//private void InvertSphere() 
-	//{
-	//	Vector3[] normals = GetComponent<MeshFilter>().mesh.normals;
+    /*This function only apply for sphere 360 solution*/
+    private void InvertSphere()
+    {
+        Vector3[] normals = GetComponent<MeshFilter>().mesh.normals;
 
-	//	for (int i = 0; i < normals.Length; i++)
-	//	{
-	//		normals[i] = -normals[i]; // point the normal from outside to inside
-	//	}
+        for (int i = 0; i < normals.Length; i++)
+        {
+            normals[i] = -normals[i]; // point the normal from outside to inside
+        }
 
-	//	GetComponent<MeshFilter>().sharedMesh.normals = normals;
+        GetComponent<MeshFilter>().sharedMesh.normals = normals;
 
-	//	int[] triangles = GetComponent<MeshFilter>().sharedMesh.triangles;
+        int[] triangles = GetComponent<MeshFilter>().sharedMesh.triangles;
 
-	//	for (int i = 0; i < triangles.Length; i += 3)
-	//	{
-	//		int t = triangles[i];
-	//		triangles[i] = triangles[i + 2];
-	//		triangles[i + 2] = t;
-	//	}
+        for (int i = 0; i < triangles.Length; i += 3)
+        {
+            int t = triangles[i];
+            triangles[i] = triangles[i + 2];
+            triangles[i + 2] = t;
+        }
+		GetComponent<MeshFilter>().sharedMesh.triangles = triangles;
 
-	//	GetComponent<MeshFilter>().sharedMesh.triangles = triangles;
-	//}
+
+    }
 }

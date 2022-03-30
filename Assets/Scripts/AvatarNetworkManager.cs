@@ -18,7 +18,7 @@ public class AvatarNetworkManager : MonoBehaviour
     [SerializeField] bool RX; // receive
     public dataTypes dataTypeSent = dataTypes.NA;
     public dataTypes dataTypeReceived = dataTypes.NA;
-    public enum dataTypes { NA, Trans, generic, voice, Mesh}
+    public enum dataTypes { NA, Trans, generic, voice, Mesh, BlendshapeWeight}
     [SerializeField] string lastReceived;
     [SerializeField] string lastSent;
     public string thisIP;
@@ -42,6 +42,7 @@ public class AvatarNetworkManager : MonoBehaviour
     public GameObject player;
     Transform[] playerJoints;
     Mesh playerMesh;
+    public SkinnedMeshRenderer skinnedMeshRenderer;
 
     private static int HeaderSize = sizeof(int) * 2;
 
@@ -55,6 +56,8 @@ public class AvatarNetworkManager : MonoBehaviour
     //microphoneData
     static byte[] micData;
     public static bool testMic;
+
+    private float[] blendshapesWeights;
 
     private void Awake()
     {
@@ -108,8 +111,9 @@ public class AvatarNetworkManager : MonoBehaviour
         else
         {
             playerJoints = player.GetComponentsInChildren<Transform>();
-            playerMesh = player.GetComponentInChildren<SkinnedMeshRenderer>().sharedMesh;          
-            //Debug.Log("The number is: " + playerMesh.vertices.Length);
+            playerMesh = skinnedMeshRenderer.sharedMesh;
+            blendshapesWeights = new float[playerMesh.blendShapeCount];
+
         }     
     }
 
@@ -121,7 +125,8 @@ public class AvatarNetworkManager : MonoBehaviour
         else if (connectionStatus == connectionStatuses.ConnectedHost)
         {
             SendTrans();
-            SendMesh();
+            //SendMesh();
+            SendWeights();
         }
     }
 
@@ -133,11 +138,20 @@ public class AvatarNetworkManager : MonoBehaviour
         sendData(lastSent, dataTypeSent);
     }
 
+    void SendWeights()
+    {
+        dataTypeSent = dataTypes.BlendshapeWeight;
+        lastSent = WriteBlendshapesWeights(dataTypeSent);
+        sendData(lastSent, dataTypeSent);
+        Debug.Log("Sending blendshapes");
+    }
+
     void SendMesh()
     {
         dataTypeSent = dataTypes.Mesh;
         byte[] m = WriteMeshes(dataTypeSent);
-        sendData(m, dataTypeSent);       
+        sendData(m, dataTypeSent);
+        Debug.Log("Sending mesh1");
     }
 
     //send unique command. must have identifiable characters for receiving end.
@@ -295,7 +309,22 @@ public class AvatarNetworkManager : MonoBehaviour
             else if ((dataTypes)byte1 == dataTypes.Mesh && connectionStatus == connectionStatuses.ConnectedClient)
             {
                 clientType = dataTypes.Mesh;
-                playerMesh = MeshDeserialize(removeByteFromArray(d));                
+                playerMesh = MeshDeserialize(removeByteFromArray(d));
+                Debug.Log("Reading mesh1");
+            }
+            // read blendshapes
+            else if ((dataTypes)byte1 == dataTypes.BlendshapeWeight && connectionStatus == connectionStatuses.ConnectedClient)
+            {
+                lastReceived = Encoding.UTF8.GetString(removeByteFromArray(d));
+                String[] weightStr = lastReceived.Split('|');
+                for(int i=0; i<weightStr.Length; i++)
+                {
+                    blendshapesWeights[i] = (float)Convert.ToDouble(weightStr[i]);
+                }
+                clientType = dataTypes.BlendshapeWeight;
+                ReadBlendshapesWeights(blendshapesWeights, clientType);
+                Debug.Log("Reading blendshapes");
+
             }
 
             // limb inputs fall into multiple categories for this project. Should be switched to a common data type as above.
@@ -380,6 +409,41 @@ public class AvatarNetworkManager : MonoBehaviour
             else
             {
                 connectionStatus = connectionStatuses.ConnectedHost;
+            }
+        }
+    }
+
+    float[] GetBlendshapesWeights(SkinnedMeshRenderer skinnedMeshRenderer)
+    {
+        var index = skinnedMeshRenderer.sharedMesh.blendShapeCount;
+        float[] Weights = new float[index];
+        for(int i=0; i<index; i++)
+        {
+            Weights[i] = skinnedMeshRenderer.GetBlendShapeWeight(i);
+        }
+        return Weights;
+    }
+    string WriteBlendshapesWeights(dataTypes sentType)
+    {
+        string data = null;
+        if(sentType == dataTypes.BlendshapeWeight)
+        {
+            for(int i=0; i<playerMesh.blendShapeCount; i++)
+            {
+                data += (GetBlendshapesWeights(skinnedMeshRenderer)[i].ToString("F3") + "|");
+            }
+            data = data.Remove(data.Length - 1);
+        }
+        return data;
+    }
+
+    void ReadBlendshapesWeights(float[] weights, dataTypes dt)
+    {
+        if(dt == dataTypes.BlendshapeWeight)
+        {
+            for(int i=0; i<weights.Length; i++)
+            {
+                skinnedMeshRenderer.SetBlendShapeWeight(i, weights[i]);
             }
         }
     }
