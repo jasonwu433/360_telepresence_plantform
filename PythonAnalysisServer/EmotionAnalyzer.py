@@ -4,7 +4,7 @@ import io
 import numpy as np
 import cv2
 import tensorflow as tf
-
+from datetime import datetime
 
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -50,7 +50,7 @@ while True:
                     emotion = emotions[np.where(classified_class == np.amax(classified_class))[1][0]]
                     print(emotion)
                     emotionText = str(np.where(classified_class == np.amax(classified_class))[1][0])
-                    arr = bytearray(emotionText, 'utf-8')
+                    arr = bytearray(emotion+"-"+ datetime.utcnow().strftime('%H:%M:%S.%f')[:-3], 'utf-8')
                     conn.sendall(arr)
             except:
                 print('error')

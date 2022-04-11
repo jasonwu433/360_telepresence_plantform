@@ -82,7 +82,7 @@ public class AIAnalysis : MonoBehaviour
     {
         try
         {
-            byte[] rec_data = new byte[1];
+            byte[] rec_data = new byte[30];
             // Get a stream object for writing. 			
             NetworkStream stream = middleware.GetStream();
             if (stream.CanWrite)
@@ -92,10 +92,10 @@ public class AIAnalysis : MonoBehaviour
 
                 if (stream.CanRead)
                 {
-                    stream.Read(rec_data, 0, 1);
+                    stream.Read(rec_data, 0, rec_data.Length);
                     string emotion = System.Text.Encoding.UTF8.GetString(rec_data, 0, rec_data.Length);
 
-                    emotion_str = emotions[int.Parse(emotion)];
+                    emotion_str = emotion;//emotions[int.Parse(emotion)];
 
                     Debug.Log("Recived from server : " + emotion);
                 }
