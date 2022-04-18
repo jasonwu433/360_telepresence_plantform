@@ -269,6 +269,7 @@ public class AvatarNetworkManager : MonoBehaviour
             //microphone data
             if ((dataTypes)byte1 == dataTypes.voice)
             {
+                AIAnalysis.SendVoiceData(d);
                 micData = removeByteFromArray(d);
             }
             //generic data types are one-off commands, usually headed with a letter

@@ -11,10 +11,10 @@ public class AIAnalysis : MonoBehaviour
     public TMP_Text HR, GSR, emotion;
     [SerializeField] private RenderTexture avatarFaceCameraTexture;
     [HideInInspector]
-    public string hr_str, gsr_str, emotion_str;
+    public static string hr_str, gsr_str, emotion_str;
 
 
-    TcpClient middleware = null;
+    static TcpClient middleware = null;
     string Host = "localhost";
     public Int32 Port = 8080;
     Thread thread;
@@ -24,14 +24,17 @@ public class AIAnalysis : MonoBehaviour
     void Start()
     {
         ReadExternalData();
-        middleware = new TcpClient();
-        try
+        if(middleware == null)
         {
-            middleware.Connect(Host, Port);
-        }
-        catch (Exception e)
-        {
-            Debug.Log("Socket error: " + e);
+            middleware = new TcpClient();
+            try
+            {
+                middleware.Connect(Host, Port);
+            }
+            catch (Exception e)
+            {
+                Debug.Log("Socket error: " + e);
+            }
         }
     }
 
@@ -77,8 +80,12 @@ public class AIAnalysis : MonoBehaviour
         }
     }
 
+    public static void SendVoiceData(byte[] data)
+    {
+        string emotion = AIAnalysis.SendMessage(data);
+    }
 
-    private void SendMessage(byte[] data)
+    private static string SendMessage(byte[] data)
     {
         try
         {
@@ -95,9 +102,9 @@ public class AIAnalysis : MonoBehaviour
                     stream.Read(rec_data, 0, rec_data.Length);
                     string emotion = System.Text.Encoding.UTF8.GetString(rec_data, 0, rec_data.Length);
 
-                    emotion_str = emotion;//emotions[int.Parse(emotion)];
-
+                    //emotion_str = emotion;//emotions[int.Parse(emotion)];
                     Debug.Log("Recived from server : " + emotion);
+                    return emotion;
                 }
             }
         }
@@ -105,5 +112,6 @@ public class AIAnalysis : MonoBehaviour
         {
             Debug.Log("Socket exception: " + socketException);
         }
+        return "";
     }
 }
