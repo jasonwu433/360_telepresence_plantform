@@ -6,13 +6,14 @@ using UnityEngine.UI;
 public class TV_streaming : MonoBehaviour
 {
     public RawImage display;
+    public bool enableAudio = false;
     private string camName;
     private AudioSource audioSource;
 
     void Start()
     {
         ReadSteamingCamera();
-        ProcessStreamingAudio();
+        ProcessStreamingAudio(enableAudio);
         ProcessStreamingTexture();
     }
 
@@ -30,13 +31,12 @@ public class TV_streaming : MonoBehaviour
 
     private void ProcessStreamingTexture()
     {
-        //Renderer rend = GetComponent<Renderer>();
         WebCamTexture mycam = new WebCamTexture(camName);
         display.texture = mycam; 
         mycam.Play();
     }
 
-    private void ProcessStreamingAudio()
+    private void ProcessStreamingAudio(bool enableAudio)
     {
         audioSource = GetComponent<AudioSource>();
         string[] audioDevices = Microphone.devices;
@@ -47,11 +47,16 @@ public class TV_streaming : MonoBehaviour
             Debug.Log(i + " " + audioDevices[i]);
         }
 
-        audioSource.clip = Microphone.Start(audioDevices[0], true, 10, 44100);
-        Debug.Log("I am using audio from: " + audioDevices[0]);
-        audioSource.loop = true;
-        while (!(Microphone.GetPosition(null) > 0)) { }
-        audioSource.Play();
+        if (enableAudio)
+        {
+            audioSource.clip = Microphone.Start(audioDevices[0], true, 10, 44100);
+            Debug.Log("I am using audio from: " + audioDevices[0]);
+            audioSource.loop = true;
+            while (!(Microphone.GetPosition(null) > 0)) { }
+            audioSource.Play();
+        }
+        else
+            return;
     }
 
     // Update is called once per frame
