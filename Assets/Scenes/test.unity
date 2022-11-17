@@ -711,4 +711,5 @@ MonoBehaviour:
   referencePoint: {fileID: 1657469401}
   distanceOffset: 2.5
   hightOffset: 0.1
+  canvas: {fileID: 0}
   type: 0
