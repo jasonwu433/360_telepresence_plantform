@@ -23,7 +23,7 @@ public class RicohThetaV : MonoBehaviour
 
 	private void ReadSteamingCamera()
 	{
-		RICOH_DRIVER_NAME = (streamingRes == streamingResolutions.R_FullHD) ? "RICOH THETA V FullHD" : "RICOH THETA V 4K";
+		RICOH_DRIVER_NAME = (streamingRes == streamingResolutions.R_FullHD) ? "RICOH THETA V FullHD" : "RICOH THETA UVC";
 
 		WebCamDevice[] devices = WebCamTexture.devices; // Get devices list
 		Debug.Log("Number of web cams connected: " + devices.Length);

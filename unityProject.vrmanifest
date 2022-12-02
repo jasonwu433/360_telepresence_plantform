@@ -5,7 +5,7 @@
       "app_key": "application.generated.unity.vrdemo.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "C:\\Yuanjie Wu\\Unity projects\\SfTi\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "action_manifest_path": "D:\\Workspace\\GitHub\\SFTI_NEW_UPDATE\\SfTi\\Assets\\StreamingAssets\\SteamVR\\actions.json",
       "strings": {
         "en_us": {
           "name": "VR demo [Testing]"
