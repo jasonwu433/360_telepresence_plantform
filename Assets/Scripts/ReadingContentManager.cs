@@ -9,7 +9,7 @@ public class ReadingContentManager : MonoBehaviour
     public TMP_Text script;
     public Scenario scriptOption;
     public ScrollRect autoScroll;
-    public float scrollingSpeed =0.1f;
+    public float scrollingSpeed =0.01f;
 
     public enum Scenario { script1,script2 };
     private string script_1, script_2;
@@ -29,11 +29,15 @@ public class ReadingContentManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (yPos > -1f)
+        if (AvatarNetworkManager.connectionStatus == AvatarNetworkManager.connectionStatuses.Connected || 
+            AvatarNetworkManager.connectionStatus == AvatarNetworkManager.connectionStatuses.ConnectedHost)
         {
-            yPos = initialYpos;
+            if (yPos > -1f)
+            {
+                yPos = initialYpos;
+            }
+            yPos += Time.deltaTime * scrollingSpeed;
+            autoScroll.content.localPosition = new Vector2(0, yPos);
         }
-        yPos += Time.deltaTime * scrollingSpeed;
-        autoScroll.content.localPosition = new Vector2(0, yPos);
     }
 }

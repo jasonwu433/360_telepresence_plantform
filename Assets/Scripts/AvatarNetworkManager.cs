@@ -12,7 +12,7 @@ using System.IO;
 public class AvatarNetworkManager : MonoBehaviour
 {
     [Header("Network Debug, Read Only")]
-    public connectionStatuses connectionStatus = connectionStatuses.Disconnected;
+    public static connectionStatuses connectionStatus = connectionStatuses.Disconnected;
     public enum connectionStatuses { Disconnected, Connecting, Connected, ConnectedHost, ConnectedClient, Error }
     [SerializeField] bool TX; // transmit
     [SerializeField] bool RX; // receive

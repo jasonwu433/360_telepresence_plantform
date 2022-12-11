@@ -10,7 +10,7 @@ public class PUCKLogger : MonoBehaviour
     private string CSVPath;
     public GameObject trackerCube;
     private bool dataStarted;
-    private StreamWriter f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +22,7 @@ public class PUCKLogger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        using (f = File.AppendText(CSVPath))
+        using (StreamWriter f = File.AppendText(CSVPath))
         {
             if (!dataStarted)
             {

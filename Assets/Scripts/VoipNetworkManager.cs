@@ -50,7 +50,7 @@ public class VoipNetworkManager : MonoBehaviour
         //}
         while (!clientAvailable)
         {
-            if (AvatarNetworkManager.instance.connectionStatus == AvatarNetworkManager.connectionStatuses.ConnectedHost || AvatarNetworkManager.instance.connectionStatus == AvatarNetworkManager.connectionStatuses.ConnectedClient)
+            if (AvatarNetworkManager.connectionStatus == AvatarNetworkManager.connectionStatuses.ConnectedHost || AvatarNetworkManager.connectionStatus == AvatarNetworkManager.connectionStatuses.ConnectedClient)
             { clientA = AvatarNetworkManager.instance.player; }
            
             if (clientA)

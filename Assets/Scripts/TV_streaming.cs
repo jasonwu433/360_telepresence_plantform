@@ -25,7 +25,7 @@ public class TV_streaming : MonoBehaviour
         {
             Debug.Log(i + " " + devices[i].name);
         }
-        camName = devices[0].name;
+        camName = devices[1].name;
         Debug.Log($"I am using the webcam named {camName}");
     }
 
